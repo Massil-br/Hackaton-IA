@@ -21,17 +21,29 @@ namespace Shared
 
         public static void LoadEnemyTextures(){
              EnemyTextureGroup[1] = [
-                 GetTexture("enemy1_1.png"),
-                GetTexture("enemy1_2.png"),
-                GetTexture("enemy1_3.png")
+                 GetTexture("src/assets/Enemies/poubelle0.png"),
+                GetTexture("src/assets/Enemies/poubelle1.png"),
+                GetTexture("src/assets/Enemies/poubelle2.png"),
+                GetTexture("src/assets/Enemies/poubelle3.png"),
+                GetTexture("src/assets/Enemies/poubelle4.png"),
+                GetTexture("src/assets/Enemies/poubelle5.png"),
+                GetTexture("src/assets/Enemies/poubelle6.png"),
+                GetTexture("src/assets/Enemies/poubelle7.png"),
+                GetTexture("src/assets/Enemies/poubelle8.png"),
+                GetTexture("src/assets/Enemies/poubelle9.png")
              ];
 
        
   
 
             EnemyTextureGroup[2] = [
-                GetTexture("enemy2_1.png"),
-                GetTexture("enemy2_2.png")
+                GetTexture("src/assets/Enemies/poub0.png"),
+                GetTexture("src/assets/Enemies/poub1.png"),
+            ];
+
+            EnemyTextureGroup[3]=[
+                GetTexture("src/assets/Enemies/rat0.png"),
+                GetTexture("src/assets/Enemies/rat1.png")
             ];
     
         }

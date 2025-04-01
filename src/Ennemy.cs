@@ -44,19 +44,28 @@ namespace src
             EnemyHpUi = new Text("",GameUI.font, 24);
             EnemyHpUi.Position = Shape.Position + new Vector2f(Shape.Size.X /2 -20,-40);
             EnemyHpUi.FillColor = Color.White;
-            animTex = //TextureManager.GetRandomEnemyList();
-            [
-                // TextureManager.GetTexture("src/assets/Enemy/"),
-                // TextureManager.GetTexture("src/assets/Enemy/"),
-                // TextureManager.GetTexture("src/assets/Enemy/"),
-                // TextureManager.GetTexture("src/assets/Enemy/"),
-            ];
+
+
+            TextureManager.LoadEnemyTextures();
+            if (!IsBoss){
+                animTex = TextureManager.GetRandomEnemyList();
+            }else{
+                animTex = [
+                    TextureManager.GetTexture("src/assets/Enemies/"),
+                    TextureManager.GetTexture,
+                ];
+            }
+            
+            
 
             sprite = new();
 
-            float scaleX = 64f / sprite.TextureRect.Width;
-            float scaleY = 64f / sprite.TextureRect.Height;
+            sprite.Texture = animTex[0];
+
+            float scaleX = 256f / sprite.TextureRect.Width;
+            float scaleY = 256f / sprite.TextureRect.Height;
             sprite.Scale = new Vector2f(Math.Abs(scaleX), scaleY);
+            sprite.Position = Shape.Position;
 
 
 
@@ -83,7 +92,7 @@ namespace src
         public void Update(float deltatime){
             if(IsAlive){
                 UpdateHp();
-                //UpdateSpriteTex(deltatime);
+                UpdateSpriteTex(deltatime);
             }
             
         }
@@ -108,6 +117,8 @@ namespace src
         public void Draw(RenderWindow window)
         {   
             window.Draw(EnemyHpUi);
+            sprite.Position = Shape.Position;
+            window.Draw(sprite);
             //window.Draw(Shape);
 
         }

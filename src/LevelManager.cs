@@ -7,7 +7,7 @@ namespace src{
 
         public  static int level = 1 ;
         
-        public static float ratio = 1.5f;
+        public static float ratio = 1.2f;
 
         
 

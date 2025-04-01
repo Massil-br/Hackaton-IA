@@ -15,6 +15,9 @@ namespace src{
     }
 
     public class Loop{
+
+        private Player player;
+
         private RenderWindow window;
         private Clock clock;
 
@@ -38,6 +41,8 @@ namespace src{
             window.Resized += OnWindowResized;
             window.LostFocus += OnLostFocus;
             window.GainedFocus += OnGainedFocus;
+            player = new Player();
+
 
             enemy = new Enemy();
             ui = new GameUI();
@@ -79,6 +84,7 @@ namespace src{
                         //pause menu
                         break;
                 }
+                player.Draw(window);
 
                 window.Display();
             }

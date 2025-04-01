@@ -51,8 +51,8 @@ namespace src
                 animTex = TextureManager.GetRandomEnemyList();
             }else{
                 animTex = [
-                    TextureManager.GetTexture("src/assets/Enemies/"),
-                    TextureManager.GetTexture,
+                    TextureManager.GetTexture("src/assets/Enemies/boss0.png"),
+                    TextureManager.GetTexture("src/assets/Enemies/boss1.png"),
                 ];
             }
             

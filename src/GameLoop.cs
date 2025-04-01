@@ -19,6 +19,9 @@ namespace src{
         private bool wasMousePressed = false;
         private ShopButton shopButton;
 
+        private Upgrades upgrades = new Upgrades();
+        private List<Ally> allies = new List<Ally>(); // Liste des allié
+
         public GameLoop(){
             shopButton = new ShopButton();
             enemy = new Enemy();
@@ -40,7 +43,7 @@ namespace src{
                 }
             }
 
-            bool isMousePressed = Mouse.IsButtonPressed(Mouse.Button.Left);
+           bool isMousePressed = Mouse.IsButtonPressed(Mouse.Button.Left);
 
             if (isMousePressed && !wasMousePressed)
             {
@@ -49,14 +52,42 @@ namespace src{
 
                 shopButton.HandleClick(worldPos);
 
-                if (enemy.Shape.GetGlobalBounds().Contains(worldPos.X, worldPos.Y) && !shopButton.IsOpen)
+                if (shopButton.IsOpen)
                 {
-                    enemy.TakeDamage(10f);
+                    var purchase = shopButton.HandleShopClick(worldPos, ref coins);
+                    switch (purchase)
+                    {
+                        case ShopPurchase.ClickDamage:
+                            upgrades.BuyClickDamage();
+                            break;
+                        case ShopPurchase.BeeAlly:
+                            upgrades.BuyAllyDPS(5f);
+                            AddAlly(Color.Yellow); // Ajoute l'abeille
+                            break;
+                        case ShopPurchase.TreeAlly:
+                            upgrades.BuyAllyDPS(10f);
+                            AddAlly(Color.Green); // Ajoute l'arbre
+                            break;
+                    }
+                }
+                else if (enemy.Shape.GetGlobalBounds().Contains(worldPos.X, worldPos.Y))
+                {
+                    float damage = upgrades.GetClickDamage(10f);
+                    enemy.TakeDamage(damage);
+                     player.Attack();
                 }
             }
 
 
             wasMousePressed = isMousePressed;
+
+
+            // Met à jour chaque allié et applique ses dégâts
+            foreach (var ally in allies)
+            {
+                ally.Update(deltatime, enemy); // Attaque de l'allié
+                ally.Draw(window); // Dessine l'allié
+            }
 
 
             if (enemy.IsDead())
@@ -85,13 +116,22 @@ namespace src{
             enemy.Draw(window);
             ui.Update(coins, inBossFight ? bossTimer : -1f);
             ui.Draw(window);
+            player.Update(deltatime);
             player.Draw(window);
             shopButton.Draw(window);
+            
 
             return State.Playing;
+        }
+        private void AddAlly(Color color)
+        {
+            float allyDPS = upgrades.GetAllyDPS();
+            var ally = new Ally(color, new Vector2f(50 + allies.Count * 40, 650), allyDPS); // Positionner à côté du joueur
+            allies.Add(ally);
         }
 
 
 
     }
 }
+

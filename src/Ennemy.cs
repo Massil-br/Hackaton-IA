@@ -54,9 +54,13 @@ namespace src
 
             sprite = new();
 
+            float scaleX = 64f / sprite.TextureRect.Width;
+            float scaleY = 64f / sprite.TextureRect.Height;
+            sprite.Scale = new Vector2f(Math.Abs(scaleX), scaleY);
 
 
-            MaxHealth = IsBoss ? 300f : 100f;
+
+            MaxHealth = IsBoss ? 300f * (LevelManager.level *LevelManager.ratio) : 100f  * (LevelManager.level *LevelManager.ratio);
             CurrentHealth = MaxHealth;
         }
 
@@ -65,6 +69,9 @@ namespace src
             CurrentHealth -= dmg;
             if (CurrentHealth <= 0){
                 IsAlive = false;
+                if (IsBoss){
+                    LevelManager.level ++;
+                }
             }
         }
 
@@ -76,7 +83,7 @@ namespace src
         public void Update(float deltatime){
             if(IsAlive){
                 UpdateHp();
-
+                //UpdateSpriteTex(deltatime);
             }
             
         }
@@ -102,6 +109,7 @@ namespace src
         {   
             window.Draw(EnemyHpUi);
             //window.Draw(Shape);
+
         }
     }
 

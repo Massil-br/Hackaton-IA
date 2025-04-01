@@ -136,7 +136,7 @@ namespace src{
                     enemy = new Enemy();
                 }
             }
-
+            enemy.Update();
             enemy.Draw(window);
             ui.Update(coins, inBossFight ? bossTimer : -1f);
             ui.Draw(window);

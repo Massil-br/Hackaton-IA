@@ -5,6 +5,14 @@ using System.Collections.Generic;
 
 namespace src
 {
+    public enum ShopPurchase
+    {
+        None,
+        ClickDamage,
+        BeeAlly,
+        TreeAlly
+    }
+
     public class ShopButton
     {
         private RectangleShape buttonShape;
@@ -43,6 +51,34 @@ namespace src
             }
         }
 
+        public ShopPurchase HandleShopClick(Vector2f mousePos, ref int coins)
+        {
+            if (!isShopOpen) return ShopPurchase.None;
+
+            float startY = 60;
+            for (int i = 0; i < shopItems.Count; i++)
+            {
+                var rect = new FloatRect(950, startY, 300, 40);
+                if (rect.Contains(mousePos.X, mousePos.Y))
+                {
+                    var (name, cost) = shopItems[i];
+                    if (coins >= cost)
+                    {
+                        coins -= cost;
+                        switch (name)
+                        {
+                            case "+1 Dégâts": return ShopPurchase.ClickDamage;
+                            case "Abeille (DPS)": return ShopPurchase.BeeAlly;
+                            case "Arbre (DPS)": return ShopPurchase.TreeAlly;
+                        }
+                    }
+                }
+                startY += 50;
+            }
+
+            return ShopPurchase.None;
+        }
+
         public void Draw(RenderWindow window)
         {
             window.Draw(buttonShape);
@@ -74,3 +110,5 @@ namespace src
         public bool IsOpen => isShopOpen;
     }
 }
+
+

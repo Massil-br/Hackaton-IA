@@ -82,7 +82,7 @@ namespace src
         }
 
         private void UpdateHp(){
-            EnemyHpUi.DisplayedString = $"{CurrentHealth} HP";
+            EnemyHpUi.DisplayedString = $"{Math.Abs((int)CurrentHealth)} HP";
         }
 
 

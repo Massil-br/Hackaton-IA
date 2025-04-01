@@ -16,6 +16,8 @@ namespace src{
 
     public class Loop{
 
+        private ShopButton shopButton;
+
         private Player player;
 
         private RenderWindow window;
@@ -35,6 +37,7 @@ namespace src{
         private bool inBossFight = false;
 
         public Loop(){
+            shopButton = new ShopButton();
             window = new(new VideoMode(1280,720),"HackatonIA");
             clock = new();
             window.Closed += (sender, e) => window.Close();
@@ -85,7 +88,7 @@ namespace src{
                         break;
                 }
                 player.Draw(window);
-
+                shopButton.Draw(window);
                 window.Display();
             }
         }
@@ -111,11 +114,14 @@ namespace src{
                 Vector2i mousePos = Mouse.GetPosition(window);
                 Vector2f worldPos = window.MapPixelToCoords(mousePos);
 
-                if (enemy.Shape.GetGlobalBounds().Contains(worldPos.X, worldPos.Y))
+                shopButton.HandleClick(worldPos);
+
+                if (enemy.Shape.GetGlobalBounds().Contains(worldPos.X, worldPos.Y) && !shopButton.IsOpen)
                 {
                     enemy.TakeDamage(10f);
                 }
             }
+
 
             wasMousePressed = isMousePressed;
 

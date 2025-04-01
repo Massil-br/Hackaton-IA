@@ -20,7 +20,6 @@ namespace src{
 
         private bool wasMousePressed = false;
 
-        private Camera camera;
         private State currentState = State.MainMenu;
         private State lastState = State.MainMenu;
         float deltatime;
@@ -35,7 +34,6 @@ namespace src{
         public Loop(){
             window = new(new VideoMode(1280,720),"HackatonIA");
             clock = new();
-            camera = new(640,360);
             window.Closed += (sender, e) => window.Close();
             window.Resized += OnWindowResized;
             window.LostFocus += OnLostFocus;
@@ -48,9 +46,7 @@ namespace src{
 
         private void OnWindowResized(object? sender, SizeEventArgs e)
         {
-            camera.Resize(640,360);
-            Camera.ViewHeight = camera.GetHeight();
-            Camera.ViewWidth = camera.GetWidth();
+            
         }
 
         private void OnLostFocus(object? sender, EventArgs e)

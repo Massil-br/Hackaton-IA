@@ -27,6 +27,11 @@ namespace src
             baseAttack = new Vector2f(590, 600); // Bas de l'écran
             Shape.Position = baseAttack;
             sprite = new();
+            float scaleX = 64f / sprite.TextureRect.Width;
+            float scaleY = 64f / sprite.TextureRect.Height;
+            sprite.Scale = new Vector2f(Math.Abs(scaleX), scaleY); 
+
+
             palyerTexList = [
                 TextureManager.GetTexture("src/assets/Player/PosePlayer.png"),
                 TextureManager.GetTexture("src/assets/Player/AttackPlayer.png")
